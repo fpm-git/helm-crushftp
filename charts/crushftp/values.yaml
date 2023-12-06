@@ -17,6 +17,7 @@ configVolume:
 loadBalancerIp: 127.0.0.1
 features:
   enableFtp: false
+  enableHttp: false
 
 # Shared
 shared:

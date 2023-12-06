@@ -43,12 +43,14 @@ spec:
             - name: CRUSH_ADMIN_PORT
               value: {{ .Values.admin.port | quote }}
           ports:
+            {{- if .Values.features.enableHttp }}
             - name: http
               containerPort: {{ .Values.admin.port }}
               protocol: TCP
             - name: http-alt
               containerPort: 9090
               protocol: TCP
+              {{- end }}
             - name: https
               containerPort: 443
               protocol: TCP
