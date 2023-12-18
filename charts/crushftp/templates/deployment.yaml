@@ -105,7 +105,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: crush-volume
-              mountPath: /var/opt/CrushFTP10-PV
+              mountPath: /var/opt/CrushFTP10
             - name: crush-configmap
               mountPath: /mnt/crush-configmap
             {{- range .Values.volumes }}

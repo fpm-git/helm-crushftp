@@ -26,8 +26,7 @@ data:
 
   startup.sh: |-
     #!/usr/bin/env bash
-    CRUSH_FTP_BASE_DIR="/var/opt/CrushFTP10-PV"
-    rm -rf /var/opt/CrushFTP10
+    CRUSH_FTP_BASE_DIR="/var/opt/CrushFTP10"
 
     if [ -z ${CRUSH_ADMIN_USER} ]; then
         CRUSH_ADMIN_USER=crushadmin
@@ -57,7 +56,7 @@ data:
     echo "########################################"
     echo "# URL:		${CRUSH_ADMIN_PROTOCOL}://127.0.0.1:${CRUSH_ADMIN_PORT}"
     echo "# User:		${CRUSH_ADMIN_USER}"
-    echo "# Password:	Check secret
+    echo "# Password:	Check secret"
     echo "# config-dir:	${CRUSH_FTP_BASE_DIR}"
     echo "########################################"
 
