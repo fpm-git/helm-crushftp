@@ -32,10 +32,14 @@ spec:
       initContainers:
       - name: init-crushftp
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-        command: ['sh', '-c', 'if [ -z "$(ls -A /var/opt/CrushFTP10-PV)" ]; then cp -rf /var/opt/CrushFTP10/* /var/opt/CrushFTP10-PV; fi']
+        command: [ "/bin/bash", "-c", "--" ]
+        args: 
+          - /mnt/crush-configmap/init.sh;
         volumeMounts:
           - name: crush-volume
             mountPath: /var/opt/CrushFTP10-PV
+          - name: crush-configmap
+            mountPath: /mnt/crush-configmap
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -101,7 +105,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: crush-volume
-              mountPath: /mnt/config
+              mountPath: /var/opt/CrushFTP10-PV
             - name: crush-configmap
               mountPath: /mnt/crush-configmap
             {{- range .Values.volumes }}

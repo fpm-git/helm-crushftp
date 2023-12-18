@@ -5,6 +5,19 @@ metadata:
   labels:
     {{- include "crushftp.labels" . | nindent 4 }}
 data:
+  init.sh: |-
+    #!/usr/bin/env bash
+
+    # Checking if /var/opt/CrushFTP10-PV is empty
+    if [ -z "$(ls -A /var/opt/CrushFTP10-PV)" ]; then
+        echo "Directory /var/opt/CrushFTP10-PV is empty. Proceeding with copy operation."
+        # Copying files from /var/opt/CrushFTP10 to /var/opt/CrushFTP10-PV
+        cp -rf /var/opt/CrushFTP10/* /var/opt/CrushFTP10-PV/
+        echo "Copy operation completed."
+    else
+        echo "Directory /var/opt/CrushFTP10-PV is not empty. Skipping copy operation."
+    fi
+
   startup.sh: |-
     #!/usr/bin/env bash
     CRUSH_FTP_BASE_DIR="/var/opt/CrushFTP10-PV"
