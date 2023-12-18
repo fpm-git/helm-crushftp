@@ -90,12 +90,10 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: crush-volume
+            - name: config-volume
               mountPath: /mnt/config
-              subPath: config
             - name: crush-volume
               mountPath: /var/opt/CrushFTP10
-              subPath: crush
             {{- range .Values.volumes }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
@@ -103,7 +101,10 @@ spec:
       volumes:
         - name: crush-volume
           persistentVolumeClaim:
-            claimName: {{ include "crushftp.fullname" . }}
+            claimName: {{ include "crushftp.fullname" . }}-crush
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: {{ include "crushftp.fullname" . }}-config
         {{- range .Values.volumes }}
         - name: {{ .name }}
           persistentVolumeClaim:
