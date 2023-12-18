@@ -7,8 +7,8 @@ metadata:
 data:
   init.sh: |-
     #!/usr/bin/env bash
-    echo "ls -al"
-    ls -al
+    echo "ls -al var/opt/CrushFTP10-PV"
+    ls -al var/opt/CrushFTP10-PV
 
     # Checking if /var/opt/CrushFTP10-PV is empty
     if [ -z "$(ls -A /var/opt/CrushFTP10-PV)" ]; then
