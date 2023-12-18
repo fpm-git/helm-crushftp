@@ -35,6 +35,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [ "/bin/bash", "-c", "--" ]
+          args: 
+            - /mnt/crush-configmap/startup.sh;
           env:
             - name: CRUSH_ADMIN_USER
               value: {{ .Values.admin.username | quote }}
@@ -92,7 +95,8 @@ spec:
           volumeMounts:
             - name: crush-volume
               mountPath: /mnt/config
-              subPath: config
+            - name: crush-configmap
+              mountPath: /mnt/crush-configmap
             {{- range .Values.volumes }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
@@ -101,6 +105,9 @@ spec:
         - name: crush-volume
           persistentVolumeClaim:
             claimName: {{ include "crushftp.fullname" . }}
+        - name: crush-configmap
+          configMap:
+            name: {{ include "crushftp.fullname" . }}-configmap
         {{- range .Values.volumes }}
         - name: {{ .name }}
           persistentVolumeClaim:
